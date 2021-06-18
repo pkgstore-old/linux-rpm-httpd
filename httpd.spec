@@ -9,7 +9,7 @@
 %global app                     apache
 %global user                    %{app}
 %global group                   %{app}
-%global release_prefix          100
+%global release_prefix          101
 
 Name:                           httpd
 Version:                        2.4.48
@@ -847,6 +847,9 @@ exit ${rv}
 
 
 %changelog
+* Fri Jun 18 2021 Package Store <kitsune.solar@gmail.com> - 2.4.48-101
+- UPD: New build for latest changes.
+
 * Thu Jun 17 2021 Package Store <kitsune.solar@gmail.com> - 2.4.48-100
 - UPD: To Package Store.
 - UPD: License.
