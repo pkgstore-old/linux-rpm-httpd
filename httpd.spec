@@ -847,6 +847,10 @@ exit ${rv}
 
 
 %changelog
+* Thu Jun 17 2021 Package Store <kitsune.solar@gmail.com> - 2.4.48-100
+- UPD: To Package Store.
+- UPD: License.
+
 * Wed Jun 02 2021 Luboš Uhliarik <luhliari@redhat.com> - 2.4.48-1
 - new version 2.4.48
 - Resolves: #1964746 - httpd-2.4.48 is available
@@ -939,29 +943,29 @@ exit ${rv}
 * Mon Nov 11 2019 Lubos Uhliarik <luhliari@redhat.com> - 2.4.41-7
 - add automatic source tarball signature verification in %prep section
 
-* Sun Oct 13 2019 MARKETPLACE <uid.marketplace@gmail.com> - 2.4.41-102
+* Sun Oct 13 2019 Package Store <kitsune.solar@gmail.com> - 2.4.41-102
 - FIX: mod_cgid/mod_cgi - further upstream consolidation patches.
 - FIX: mod_proxy_balancer - fix balancer-manager XSRF check (PR 63688).
 
-* Thu Oct 03 2019 MARKETPLACE <uid.marketplace@gmail.com> - 2.4.41-101
+* Thu Oct 03 2019 Package Store <kitsune.solar@gmail.com> - 2.4.41-101
 - UPD: master-5b6bed.
 - FIX: mod_cgid - possible stdout timeout handling fix (#1757683).
 
-* Wed Oct 02 2019 MARKETPLACE <uid.marketplace@gmail.com> - 2.4.41-100
+* Wed Oct 02 2019 Package Store <kitsune.solar@gmail.com> - 2.4.41-100
 - NEW: v2.4.41.
 - UPD: master-a4638c.
 - UPD: "index.html".
 
-* Wed Jul 24 2019 MARKETPLACE <uid.marketplace@gmail.com> - 2.4.39-105
+* Wed Jul 24 2019 Package Store <kitsune.solar@gmail.com> - 2.4.39-105
 - UPD: master-5586df.
 
-* Wed Jul 24 2019 MARKETPLACE <uid.marketplace@gmail.com> - 2.4.39-104
+* Wed Jul 24 2019 Package Store <kitsune.solar@gmail.com> - 2.4.39-104
 - UPD: SPEC-file.
 
-* Sun Jul 07 2019 MARKETPLACE <uid.marketplace@gmail.com> - 2.4.39-103
+* Sun Jul 07 2019 Package Store <kitsune.solar@gmail.com> - 2.4.39-103
 - UPD: "index.html".
 
-* Sat Jun 29 2019 MARKETPLACE <uid.marketplace@gmail.com> - 2.4.39-102
+* Sat Jun 29 2019 Package Store <kitsune.solar@gmail.com> - 2.4.39-102
 - UPD: MARKETPLACE.
 
 * Fri Jun 21 2019 Joe Orton <jorton@redhat.com> - 2.4.39-9
