@@ -9,109 +9,112 @@
 %global app                     apache
 %global user                    %{app}
 %global group                   %{app}
-%global release_prefix          101
+%global release_prefix          102
 
 Name:                           httpd
 Version:                        2.4.48
 Release:                        %{release_prefix}%{?dist}
 Summary:                        Apache HTTP Server
 License:                        ASL 2.0
-URL:                            https://httpd.apache.org/
+URL:                            https://httpd.apache.org
+Vendor:                         Package Store <https://pkgstore.github.io>
+Packager:                       Kitsune Solar <kitsune.solar@gmail.com>
 
-Source0: https://www.apache.org/dist/httpd/httpd-%{version}.tar.bz2
-Source1: https://www.apache.org/dist/httpd/httpd-%{version}.tar.bz2.asc
-# gpg key file downloaded and verified by luhliarik
+Source0:                        https://www.apache.org/dist/httpd/httpd-%{version}.tar.bz2
+Source1:                        https://www.apache.org/dist/httpd/httpd-%{version}.tar.bz2.asc
+# GPG key file downloaded and verified by luhliarik.
 # https://httpd.apache.org/dev/verification.html
-Source2: https://dist.apache.org/repos/dist/release/httpd/KEYS
-Source3: httpd.logrotate
-Source4: instance.conf
-Source5: httpd-ssl-pass-dialog
-Source6: httpd.tmpfiles
-Source7: httpd.service
-Source8: action-graceful.sh
-Source9: action-configtest.sh
-Source10: server-status.conf
-Source11: httpd.conf
-Source12: 00-base.conf
-Source13: 00-mpm.conf
-Source14: 00-lua.conf
-Source15: 01-cgi.conf
-Source16: 00-dav.conf
-Source17: 00-proxy.conf
-Source18: 00-ssl.conf
-Source19: 01-ldap.conf
-Source20: 00-proxyhtml.conf
-Source21: userdir.conf
-Source22: ssl.conf
-Source23: welcome.conf
-Source24: manual.conf
-Source25: 00-systemd.conf
-Source26: 01-session.conf
-Source27: 10-listen443.conf
-Source28: httpd.socket
-Source29: 00-optional.conf
-Source30: README.confd
-Source31: README.confmod
-Source32: httpd.service.xml
-Source33: htcacheclean.service.xml
-Source34: httpd.conf.xml
-Source40: htcacheclean.service
-Source41: htcacheclean.sysconf
-Source42: httpd-init.service
-Source43: httpd-ssl-gencerts
-Source44: httpd@.service
-Source45: config.layout
-Source46: apachectl.sh
-Source47: apachectl.xml
-Source48: apache-poweredby.png
+Source2:                        https://dist.apache.org/repos/dist/release/httpd/KEYS
+Source3:                        httpd.logrotate
+Source4:                        instance.conf
+Source5:                        httpd-ssl-pass-dialog
+Source6:                        httpd.tmpfiles
+Source7:                        httpd.service
+Source8:                        action-graceful.sh
+Source9:                        action-configtest.sh
+Source10:                       server-status.conf
+Source11:                       httpd.conf
+Source12:                       00-base.conf
+Source13:                       00-mpm.conf
+Source14:                       00-lua.conf
+Source15:                       01-cgi.conf
+Source16:                       00-dav.conf
+Source17:                       00-proxy.conf
+Source18:                       00-ssl.conf
+Source19:                       01-ldap.conf
+Source20:                       00-proxyhtml.conf
+Source21:                       userdir.conf
+Source22:                       ssl.conf
+Source23:                       welcome.conf
+Source24:                       manual.conf
+Source25:                       00-systemd.conf
+Source26:                       01-session.conf
+Source27:                       10-listen443.conf
+Source28:                       httpd.socket
+Source29:                       00-optional.conf
+Source30:                       README.confd
+Source31:                       README.confmod
+Source32:                       httpd.service.xml
+Source33:                       htcacheclean.service.xml
+Source34:                       httpd.conf.xml
+Source40:                       htcacheclean.service
+Source41:                       htcacheclean.sysconf
+Source42:                       httpd-init.service
+Source43:                       httpd-ssl-gencerts
+Source44:                       httpd@.service
+Source45:                       config.layout
+Source46:                       apachectl.sh
+Source47:                       apachectl.xml
+Source48:                       apache-poweredby.png
 
-# Signature
+# Signature.
 Source900:                      https://www.apache.org/dist/httpd/httpd-%{version}.tar.bz2.asc
-# Listen port
+# Listen port.
 Source920:                      10-listen8081.conf
 
-# build/scripts patches
-Patch2: httpd-2.4.43-apxs.patch
-Patch3: httpd-2.4.43-deplibs.patch
-# Needed for socket activation and mod_systemd patch
-Patch19: httpd-2.4.43-detect-systemd.patch
-# Features/functional changes
-Patch21: httpd-2.4.48-r1842929+.patch
-Patch22: httpd-2.4.43-mod_systemd.patch
-Patch23: httpd-2.4.48-export.patch
-Patch24: httpd-2.4.43-corelimit.patch
-Patch25: httpd-2.4.43-selinux.patch
-Patch26: httpd-2.4.43-gettid.patch
-Patch27: httpd-2.4.43-icons.patch
-Patch30: httpd-2.4.43-cachehardmax.patch
-Patch34: httpd-2.4.43-socket-activation.patch
-Patch38: httpd-2.4.43-sslciphdefault.patch
-Patch39: httpd-2.4.43-sslprotdefault.patch
-Patch40: httpd-2.4.43-r1861269.patch
-Patch41: httpd-2.4.43-r1861793+.patch
-Patch42: httpd-2.4.43-r1828172+.patch
-Patch45: httpd-2.4.43-logjournal.patch
+# Build / scripts patches.
+Patch2:                         httpd-2.4.43-apxs.patch
+Patch3:                         httpd-2.4.43-deplibs.patch
+# Needed for socket activation and mod_systemd patch.
+Patch19:                        httpd-2.4.43-detect-systemd.patch
+# Features/functional changes.
+Patch21:                        httpd-2.4.48-r1842929+.patch
+Patch22:                        httpd-2.4.43-mod_systemd.patch
+Patch23:                        httpd-2.4.48-export.patch
+Patch24:                        httpd-2.4.43-corelimit.patch
+Patch25:                        httpd-2.4.43-selinux.patch
+Patch26:                        httpd-2.4.43-gettid.patch
+Patch27:                        httpd-2.4.43-icons.patch
+Patch30:                        httpd-2.4.43-cachehardmax.patch
+Patch34:                        httpd-2.4.43-socket-activation.patch
+Patch38:                        httpd-2.4.43-sslciphdefault.patch
+Patch39:                        httpd-2.4.43-sslprotdefault.patch
+Patch40:                        httpd-2.4.43-r1861269.patch
+Patch41:                        httpd-2.4.43-r1861793+.patch
+Patch42:                        httpd-2.4.43-r1828172+.patch
+Patch45:                        httpd-2.4.43-logjournal.patch
 
-# Bug fixes
+# Bug fixes.
 # https://bugzilla.redhat.com/show_bug.cgi?id=1397243
-Patch60: httpd-2.4.43-enable-sslv3.patch
-Patch61: httpd-2.4.48-r1878890.patch
-Patch63: httpd-2.4.46-htcacheclean-dont-break.patch
 
-# Security fixes
+Patch60:                        httpd-2.4.43-enable-sslv3.patch
+Patch61:                        httpd-2.4.48-r1878890.patch
+Patch63:                        httpd-2.4.46-htcacheclean-dont-break.patch
+
+# Security fixes.
 
 BuildRequires:                  gcc, autoconf, pkgconfig, findutils, xmlto
 BuildRequires:                  perl-interpreter, perl-generators, systemd-devel
 BuildRequires:                  zlib-devel, libselinux-devel, lua-devel, brotli-devel
 BuildRequires:                  apr-devel >= 1.5.0, apr-util-devel >= 1.5.0, pcre-devel >= 5.0
-BuildRequires: gnupg2
-Requires: /etc/mime.types, system-logos(httpd-logo-ng)
+BuildRequires:                  gnupg2
+Requires:                       /etc/mime.types, system-logos(httpd-logo-ng)
 Provides:                       webserver
 Provides:                       mod_dav = %{version}-%{release}, httpd-suexec = %{version}-%{release}
 Provides:                       httpd-mmn = %{mmn}, httpd-mmn = %{mmnisa}
 Requires:                       httpd-tools = %{version}-%{release}
 Requires:                       httpd-filesystem = %{version}-%{release}
-Recommends: mod_http2, mod_lua
+Recommends:                     mod_http2, mod_lua
 Requires(pre):                  httpd-filesystem
 Requires(preun):                systemd-units
 Requires(postun):               systemd-units
@@ -192,10 +195,10 @@ BuildRequires:                  openssl-devel
 Requires(pre):                  httpd-filesystem
 Requires:                       httpd = 0:%{version}-%{release}, httpd-mmn = %{mmnisa}
 Requires:                       sscg >= 2.2.0, /usr/bin/hostname
-# Require an OpenSSL which supports PROFILE=SYSTEM
+# Require an OpenSSL which supports PROFILE=SYSTEM.
 Conflicts:                      openssl-libs < 1:1.0.1h-4
-# mod_ssl/mod_nss cannot both be loaded simultaneously
-Conflicts: mod_nss
+# mod_ssl/mod_nss cannot both be loaded simultaneously.
+Conflicts:                      mod_nss
 
 %description -n mod_ssl
 The mod_ssl module provides strong cryptography for the Apache HTTP
@@ -210,7 +213,7 @@ Security (TLS) protocols.
 Summary:                        HTML and XML content filters for the Apache HTTP Server
 Requires:                       httpd = 0:%{version}-%{release}, httpd-mmn = %{mmnisa}
 BuildRequires:                  libxml2-devel
-BuildRequires: make
+BuildRequires:                  make
 Epoch:                          1
 Obsoletes:                      mod_proxy_html < 1:2.4.1-2
 
@@ -283,13 +286,13 @@ written in the Lua programming language.
 %patch61 -p1 -b .r1878890
 %patch63 -p1 -b .htcacheclean-dont-break
 
-# Patch in the vendor string
+# Patch in the vendor string.
 %{__sed} -i '/^#define PLATFORM/s/Unix/%{vstring}/' os/unix/os.h
 
 # Prevent use of setcap in "install-suexec-caps" target.
 %{__sed} -i '/suexec/s,setcap ,echo Skipping setcap for ,' Makefile.in
 
-# Example conf for instances
+# Example "*.conf" for instances.
 %{__cp} %{_sourcedir}/instance.conf .
 %{__sed} < %{_sourcedir}/httpd.conf >> instance.conf '
 0,/^ServerRoot/d;
@@ -308,10 +311,10 @@ if [[ "x${vmmn}" != "x%{mmn}" ]]; then
   exit 1
 fi
 
-# A new logo which comes together with a new test page
+# A new logo which comes together with a new test page.
 %{__cp} %{SOURCE48} ./docs/icons/apache_pb3.png
 
-# Provide default layout
+# Provide default layout.
 %{__cp} %{_sourcedir}/config.layout .
 
 %{__sed} '
@@ -333,23 +336,23 @@ xmlto man %{SOURCE47}
 
 
 %build
-# forcibly prevent use of bundled apr, apr-util, pcre
+# Forcibly prevent use of bundled apr, apr-util, pcre.
 %{__rm} -rf srclib/{apr,apr-util,pcre}
 
-# regenerate configure scripts
+# Regenerate configure scripts.
 autoheader && autoconf || exit 1
 
-# Before configure; fix location of build dir in generated apxs
+# Before configure; fix location of build dir in generated apxs.
 %{__perl} -pi -e "s:\@exp_installbuilddir\@:%{_libdir}/httpd/build:g" \
   support/apxs.in
 
 export CFLAGS=${RPM_OPT_FLAGS}
 export LDFLAGS="-Wl,-z,relro,-z,now"
 
-# Hard-code path to links to avoid unnecessary builddep
+# Hard-code path to links to avoid unnecessary builddep.
 export LYNX_PATH=/usr/bin/links
 
-# Build the daemon
+# Build the daemon.
 ./configure                                           \
   --prefix=%{_sysconfdir}/httpd                       \
   --exec-prefix=%{_prefix}                            \
@@ -398,7 +401,7 @@ export LYNX_PATH=/usr/bin/links
 
 %{make_install}
 
-# Install systemd service files
+# Install systemd service files.
 %{__mkdir_p} %{buildroot}%{_unitdir}
 for s in httpd.service htcacheclean.service httpd.socket \
   httpd@.service httpd-init.service; do
@@ -406,7 +409,7 @@ for s in httpd.service htcacheclean.service httpd.socket \
     %{buildroot}%{_unitdir}/${s}
 done
 
-# Install conf file/directory
+# Install conf file/directory.
 %{__mkdir} %{buildroot}%{_sysconfdir}/httpd/conf.d \
   %{buildroot}%{_sysconfdir}/httpd/conf.modules.d
 %{__install} -m 644 %{_sourcedir}/README.confd \
@@ -428,7 +431,7 @@ done
 touch -r %{_sourcedir}/00-mpm.conf \
   %{buildroot}%{_sysconfdir}/httpd/conf.modules.d/00-mpm.conf
 
-# Install systemd override drop directory
+# Install systemd override drop directory.
 # Web application packages can drop snippets into this location if
 # they need ExecStart[pre|post].
 %{__mkdir} %{buildroot}%{_unitdir}/httpd.service.d
@@ -446,13 +449,13 @@ for f in welcome.conf ssl.conf manual.conf userdir.conf; do
     %{buildroot}%{_sysconfdir}/httpd/conf.d/${f}
 done
 
-# Split-out extra config shipped as default in conf.d:
+# Split-out extra config shipped as default in "conf.d".
 for f in autoindex; do
   %{__install} -m 644 docs/conf/extra/httpd-${f}.conf \
     %{buildroot}%{_sysconfdir}/httpd/conf.d/${f}.conf
 done
 
-# Extra config trimmed:
+# Extra config trimmed.
 %{__rm} -v docs/conf/extra/httpd-{ssl,userdir}.conf
 
 %{__rm} %{buildroot}%{_sysconfdir}/httpd/conf/*.conf
@@ -463,16 +466,16 @@ done
 %{__install} -m 644 -p %{_sourcedir}/htcacheclean.sysconf \
   %{buildroot}%{_sysconfdir}/sysconfig/htcacheclean
 
-# tmpfiles.d configuration
+# "tmpfiles.d" configuration.
 %{__mkdir_p} %{buildroot}%{_prefix}/lib/tmpfiles.d
 %{__install} -m 644 -p %{_sourcedir}/httpd.tmpfiles \
   %{buildroot}%{_prefix}/lib/tmpfiles.d/httpd.conf
 
-# Other directories
+# Other directories.
 %{__mkdir_p} %{buildroot}%{_localstatedir}/lib/httpd \
   %{buildroot}/run/httpd/htcacheclean
 
-# Substitute in defaults which are usually done (badly) by "make install"
+# Substitute in defaults which are usually done (badly) by "make install".
 %{__sed} -i \
   "/^DavLockDB/d;
   s,@@ServerRoot@@/user.passwd,/etc/httpd/conf/user.passwd,;
@@ -481,16 +484,16 @@ done
   s,@@Port@@,80,;" \
   docs/conf/extra/*.conf
 
-# Set correct path for httpd binary in apachectl script
+# Set correct path for httpd binary in apachectl script.
 %{__sed} 's,@HTTPDBIN@,%{_sbindir}/httpd,g' %{_sourcedir}/apachectl.sh \
   > apachectl.sh
 
-# Create cache directory
+# Create cache directory.
 %{__mkdir_p} %{buildroot}%{_localstatedir}/cache/httpd  \
   %{buildroot}%{_localstatedir}/cache/httpd/proxy       \
   %{buildroot}%{_localstatedir}/cache/httpd/ssl
 
-# Make the MMN accessible to module packages
+# Make the MMN accessible to module packages.
 echo %{mmnisa} > %{buildroot}%{_includedir}/httpd/.mmn
 %{__mkdir_p} %{buildroot}%{_rpmconfigdir}/macros.d
 cat > %{buildroot}%{_rpmconfigdir}/macros.d/macros.httpd <<EOF
@@ -503,7 +506,7 @@ cat > %{buildroot}%{_rpmconfigdir}/macros.d/macros.httpd <<EOF
 %%_httpd_requires Requires: httpd-mmn = %%{_httpd_mmn}
 EOF
 
-# Handle contentdir
+# Handle contentdir.
 %{__mkdir} %{buildroot}%{contentdir}/noindex \
       %{buildroot}%{contentdir}/server-status
 %{__ln_s} ../../testpage/index.html \
@@ -512,12 +515,12 @@ EOF
         %{buildroot}%{contentdir}/server-status
 %{__rm} -rf %{contentdir}/htdocs
 
-# remove manual sources
+# Remove manual sources.
 find %{buildroot}%{contentdir}/manual \( \
   -name \*.xml -o -name \*.xml.* -o -name \*.ent -o -name \*.xsl -o -name \*.dtd \
   \) -print0 | xargs -0 %{__rm} -f
 
-# Strip the manual down just to English and replace the typemaps with flat files:
+# Strip the manual down just to English and replace the typemaps with flat files.
 set +x
 for f in $( find %{buildroot}%{contentdir}/manual -name \*.html -type f ); do
   if [[ -f ${f}.en ]]; then
@@ -527,31 +530,31 @@ for f in $( find %{buildroot}%{contentdir}/manual -name \*.html -type f ); do
 done
 set -x
 
-# Clean Document Root
+# Clean Document Root.
 %{__rm} -v %{buildroot}%{docroot}/html/*.html \
   %{buildroot}%{docroot}/cgi-bin/*
 
-# Symlink for the powered-by-${DISTRO} image:
+# Symlink for the powered-by-${DISTRO} image.
 %{__ln_s} ../../pixmaps/poweredby.png \
   %{buildroot}%{contentdir}/icons/poweredby.png
 
-# symlinks for /etc/httpd
+# Symlinks for /etc/httpd.
 rmdir %{buildroot}/etc/httpd/{state,run}
 %{__ln_s} ../..%{_localstatedir}/log/httpd %{buildroot}/etc/httpd/logs
 %{__ln_s} ../..%{_localstatedir}/lib/httpd %{buildroot}/etc/httpd/state
 %{__ln_s} /run/httpd %{buildroot}/etc/httpd/run
 %{__ln_s} ../..%{_libdir}/httpd/modules %{buildroot}/etc/httpd/modules
 
-# Install http-ssl-pass-dialog
+# Install http-ssl-pass-dialog.
 %{__mkdir_p} %{buildroot}%{_libexecdir}
 %{__install} -m 755 %{_sourcedir}/httpd-ssl-pass-dialog \
   %{buildroot}%{_libexecdir}/httpd-ssl-pass-dialog
 
-# Install http-ssl-gencerts
+# Install http-ssl-gencerts.
 %{__install} -m 755 %{_sourcedir}/httpd-ssl-gencerts \
   %{buildroot}%{_libexecdir}/httpd-ssl-gencerts
 
-# Install scripts
+# Install scripts.
 %{__install} -m 755 apachectl.sh %{buildroot}%{_sbindir}/apachectl
 touch -r %{_sourcedir}/apachectl.sh %{buildroot}%{_sbindir}/apachectl
 %{__mkdir_p} %{buildroot}%{_libexecdir}/initscripts/legacy-actions/httpd
@@ -560,12 +563,12 @@ for f in graceful configtest; do
     %{buildroot}%{_libexecdir}/initscripts/legacy-actions/httpd/${f}
 done
 
-# Install logrotate config
+# Install logrotate config.
 %{__mkdir_p} %{buildroot}/etc/logrotate.d
 %{__install} -m 644 -p %{_sourcedir}/httpd.logrotate \
   %{buildroot}/etc/logrotate.d/httpd
 
-# Install man pages
+# Install man pages.
 %{__install} -d %{buildroot}%{_mandir}/man8 %{buildroot}%{_mandir}/man5
 %{__install} -m 644 -p httpd.service.8 httpd-init.service.8 httpd.socket.8  \
   httpd@.service.8 htcacheclean.service.8                                   \
@@ -573,7 +576,7 @@ done
 %{__install} -m 644 -p httpd.conf.5 \
   %{buildroot}%{_mandir}/man5
 
-# fix man page paths
+# Fix man page paths.
 %{__sed} -e "s|/usr/local/apache2/conf/httpd.conf|/etc/httpd/conf/httpd.conf|"  \
   -e "s|/usr/local/apache2/conf/mime.types|/etc/mime.types|"                    \
   -e "s|/usr/local/apache2/conf/magic|/etc/httpd/conf/magic|"                   \
@@ -583,21 +586,21 @@ done
   -e "s|/usr/local/apache2|/etc/httpd|" < docs/man/httpd.8                      \
   > %{buildroot}%{_mandir}/man8/httpd.8
 
-# Make ap_config_layout.h libdir-agnostic
+# Make "ap_config_layout.h" libdir-agnostic.
 %{__sed} -i '/.*DEFAULT_..._LIBEXECDIR/d;/DEFAULT_..._INSTALLBUILDDIR/d' \
   %{buildroot}%{_includedir}/httpd/ap_config_layout.h
 
-# Fix path to instdso in special.mk
+# Fix path to instdso in "special.mk".
 %{__sed} -i '/instdso/s,top_srcdir,top_builddir,' \
   %{buildroot}%{_libdir}/httpd/build/special.mk
 
-# vendor-apxs uses an unsanitized config_vars.mk which may
-# have dependencies on redhat-rpm-config.  apxs uses the
-# config_vars.mk with a sanitized config_vars.mk
+# Vendor-apxs uses an unsanitized "config_vars.mk" which may
+# have dependencies on redhat-rpm-config. Apxs uses the
+# "config_vars.mk" with a sanitized "config_vars.mk".
 %{__cp} -p %{buildroot}%{_libdir}/httpd/build/config_vars.mk \
       %{buildroot}%{_libdir}/httpd/build/vendor_config_vars.mk
 
-# Sanitize CFLAGS in standard config_vars.mk
+# Sanitize CFLAGS in standard "config_vars.mk".
 %{__sed} '/^CFLAGS/s,=.*$,= -O2 -g -Wall,' \
     -i %{buildroot}%{_libdir}/httpd/build/config_vars.mk
 
@@ -608,7 +611,7 @@ touch -r %{buildroot}%{_bindir}/apxs \
       %{buildroot}%{_libdir}/httpd/build/vendor-apxs
 chmod 755 %{buildroot}%{_libdir}/httpd/build/vendor-apxs
 
-# Remove unpackaged files
+# Remove unpackaged files.
 %{__rm} -vf \
       %{buildroot}%{_libdir}/*.exp \
       %{buildroot}/etc/httpd/conf/mime.types \
@@ -663,7 +666,7 @@ nm --defined-only server/exports.o | \
 if [[ ${rv} -eq 0 ]]; then
   echo PASS: Symbol export list verified.
 fi
-# Check the built modules are all PIC
+# Check the built modules are all PIC.
 if readelf -d %{buildroot}%{_libdir}/httpd/modules/*.so | grep TEXTREL; then
   echo FAIL: Modules contain non-relocatable code
   rv=1
@@ -680,7 +683,7 @@ for f in %{buildroot}%{_libdir}/httpd/modules/*.so; do
     echo PASS: Module ${m} is configured and loaded.
   fi
 done
-# Ensure every loaded mod_* is actually built
+# Ensure every loaded "mod_*" is actually built.
 mods=$( grep -h ^LoadModule %{buildroot}%{_sysconfdir}/httpd/conf.modules.d/*.conf | %{__sed} 's,.*modules/,,' )
 for m in ${mods}; do
   f=%{buildroot}%{_libdir}/httpd/modules/${m}
@@ -847,6 +850,9 @@ exit ${rv}
 
 
 %changelog
+* Fri Jun 18 2021 Package Store <kitsune.solar@gmail.com> - 2.4.48-102
+- UPD: Add "Vendor" & "Packager" fields.
+
 * Fri Jun 18 2021 Package Store <kitsune.solar@gmail.com> - 2.4.48-101
 - UPD: New build for latest changes.
 
