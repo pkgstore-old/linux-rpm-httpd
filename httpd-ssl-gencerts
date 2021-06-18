@@ -1,0 +1,31 @@
+#!/usr/bin/bash
+
+set -e
+
+FQDN=$( hostname )
+CRT="/etc/pki/tls/certs/httpd.localhost.crt"
+KEY="/etc/pki/tls/private/httpd.localhost.key"
+
+if [[ -f "${CRT}" ]] && [[ -f "${KEY}" ]]; then
+  exit 0
+fi
+
+if [[ -f "${CRT}" ]] && [[ ! -f "${KEY}" ]]; then
+  echo "Missing certificate key!"
+  exit 1
+fi
+
+if [[ ! -f "${CRT}" ]] && [[ -f "${KEY}" ]]; then
+  echo "Missing certificate, but key is present!"
+  exit 1
+fi
+
+sscg -q                     \
+  --cert-file "${CRT}"      \
+  --cert-key-file "${KEY}"  \
+  --ca-file "${CRT}"        \
+  --lifetime 3650           \
+  --key-strength 2048       \
+  --hostname "${FQDN}"      \
+  --email "root@${FQDN}"
+
