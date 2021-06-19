@@ -66,7 +66,6 @@ Source45:                       config.layout
 Source46:                       apachectl.sh
 Source47:                       apachectl.xml
 Source48:                       apache-poweredby.png
-
 # Signature.
 Source900:                      https://www.apache.org/dist/httpd/httpd-%{version}.tar.bz2.asc
 # Listen port.
