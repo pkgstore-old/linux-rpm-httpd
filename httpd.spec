@@ -346,7 +346,7 @@ autoheader && autoconf || exit 1
 %{__perl} -pi -e "s:\@exp_installbuilddir\@:%{_libdir}/httpd/build:g" \
   support/apxs.in
 
-export CFLAGS=%{optflags}
+export CFLAGS=${RPM_OPT_FLAGS}
 export LDFLAGS="-Wl,-z,relro,-z,now"
 
 # Hard-code path to links to avoid unnecessary builddep.
