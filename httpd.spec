@@ -9,7 +9,7 @@
 %global app                     apache
 %global user                    %{app}
 %global group                   %{app}
-%global release_prefix          102
+%global release_prefix          103
 
 Name:                           httpd
 Version:                        2.4.48
@@ -834,9 +834,11 @@ exit ${rv}
 %{_libdir}/httpd/modules/mod_auth_form.so
 %config(noreplace) %{_sysconfdir}/httpd/conf.modules.d/01-session.conf
 
+
 %files -n mod_lua
 %{_libdir}/httpd/modules/mod_lua.so
 %config(noreplace) %{_sysconfdir}/httpd/conf.modules.d/00-lua.conf
+
 
 %files devel
 %{_includedir}/httpd
@@ -850,6 +852,9 @@ exit ${rv}
 
 
 %changelog
+* Sat Jun 19 2021 Package Store <kitsune.solar@gmail.com> - 2.4.48-103
+- UPD: SPEC syntax.
+
 * Fri Jun 18 2021 Package Store <kitsune.solar@gmail.com> - 2.4.48-102
 - UPD: Add "Vendor" & "Packager" fields.
 
