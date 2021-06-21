@@ -2,7 +2,27 @@
 
 The **Apache HTTP Server** is a powerful, efficient, and extensible web server.
 
-## How it works
+## Install
+
+### Fedora COPR
+
+```
+$ dnf copr enable pkgstore/httpd
+```
+
+### Open Build Service (OBS)
+
+```
+# Work in Progress
+```
+
+## Update
+
+```
+$ dnf upgrade -y httpd
+```
+
+## How to Build
 
 1. Get source from [src.fedoraproject.org](https://src.fedoraproject.org/rpms/httpd).
 2. Write last commit SHA from [src.fedoraproject.org](https://src.fedoraproject.org/rpms/httpd) to [CHANGELOG](CHANGELOG).
