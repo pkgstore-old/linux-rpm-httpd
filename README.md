@@ -8,6 +8,7 @@ The **Apache HTTP Server** is a powerful, efficient, and extensible web server.
 
 ```
 $ dnf copr enable pkgstore/httpd
+$ dnf install -y httpd
 ```
 
 ### Open Build Service (OBS)
