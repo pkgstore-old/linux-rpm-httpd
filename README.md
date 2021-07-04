@@ -23,6 +23,13 @@ $ dnf install -y httpd
 $ dnf upgrade -y httpd
 ```
 
+## Remove
+
+```
+$ dnf erase -y httpd
+$ dnf copr remove pkgstore/httpd
+```
+
 ## How to Build
 
 1. Get source from [src.fedoraproject.org](https://src.fedoraproject.org/rpms/httpd).
