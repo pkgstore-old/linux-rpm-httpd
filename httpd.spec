@@ -9,7 +9,7 @@
 %global app                     apache
 %global user                    %{app}
 %global group                   %{app}
-%global release_prefix          103
+%global release_prefix          104
 
 Name:                           httpd
 Version:                        2.4.48
@@ -90,7 +90,7 @@ Patch38:                        httpd-2.4.43-sslciphdefault.patch
 Patch39:                        httpd-2.4.43-sslprotdefault.patch
 Patch40:                        httpd-2.4.43-r1861269.patch
 Patch41:                        httpd-2.4.43-r1861793+.patch
-Patch42:                        httpd-2.4.43-r1828172+.patch
+Patch42:                        httpd-2.4.48-r1828172+.patch
 Patch45:                        httpd-2.4.43-logjournal.patch
 
 # Bug fixes.
@@ -851,6 +851,10 @@ exit ${rv}
 
 
 %changelog
+* Tue Jul 20 2021 Package Store <kitsune.solar@gmail.com> - 2.4.48-104
+- UPD: mod_cgi/mod_cgid: update to unification from trunk.
+- UPD: httpd.conf: add note on care with Listen and starting at boot.
+
 * Sat Jun 19 2021 Package Store <kitsune.solar@gmail.com> - 2.4.48-103
 - UPD: SPEC syntax.
 
