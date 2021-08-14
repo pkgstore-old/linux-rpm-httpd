@@ -9,7 +9,7 @@
 %global app                     apache
 %global user                    %{app}
 %global group                   %{app}
-%global release_prefix          104
+%global release_prefix          105
 
 Name:                           httpd
 Version:                        2.4.48
@@ -84,6 +84,7 @@ Patch24:                        httpd-2.4.43-corelimit.patch
 Patch25:                        httpd-2.4.43-selinux.patch
 Patch26:                        httpd-2.4.43-gettid.patch
 Patch27:                        httpd-2.4.43-icons.patch
+Patch28:                        httpd-2.4.48-openssl3.patch
 Patch30:                        httpd-2.4.43-cachehardmax.patch
 Patch34:                        httpd-2.4.43-socket-activation.patch
 Patch38:                        httpd-2.4.43-sslciphdefault.patch
@@ -272,6 +273,7 @@ written in the Lua programming language.
 %patch25 -p1 -b .selinux
 %patch26 -p1 -b .gettid
 %patch27 -p1 -b .icons
+%patch28 -p1 -b .openssl3
 %patch30 -p1 -b .cachehardmax
 %patch34 -p1 -b .socketactivation
 %patch38 -p1 -b .sslciphdefault
@@ -536,6 +538,12 @@ set -x
 # Symlink for the powered-by-${DISTRO} image.
 %{__ln_s} ../../pixmaps/poweredby.png \
   %{buildroot}%{contentdir}/icons/poweredby.png
+
+# Symlink for the system logo
+%if 0%{?rhel} >= 9
+%{__ln_s} ../../pixmaps/system-noindex-logo.png \
+  %{buildroot}%{contentdir}/icons/system_noindex_logo.png
+%endif
 
 # Symlinks for /etc/httpd.
 rmdir %{buildroot}/etc/httpd/{state,run}
@@ -851,6 +859,18 @@ exit ${rv}
 
 
 %changelog
+* Sat Aug 14 2021 Package Store <kitsune.solar@gmail.com> - 2.4.48-105
+- UPD: SPEC-file.
+
+* Fri Aug 06 2021 Luboš Uhliarik <luhliari@redhat.com> - 2.4.48-7
+- add symlink to system logo for noindex test page
+
+* Fri Aug 06 2021 Joe Orton <jorton@redhat.com> - 2.4.48-4
+- add OpenSSL 3.x compatibility patch
+
+* Thu Jul 22 2021 Fedora Release Engineering <releng@fedoraproject.org> - 2.4.48-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
+
 * Tue Jul 20 2021 Package Store <kitsune.solar@gmail.com> - 2.4.48-104
 - UPD: mod_cgi/mod_cgid: update to unification from trunk.
 - UPD: httpd.conf: add note on care with Listen and starting at boot.

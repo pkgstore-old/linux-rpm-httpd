@@ -25,7 +25,6 @@ sscg -q                     \
   --cert-key-file "${KEY}"  \
   --ca-file "${CRT}"        \
   --lifetime 3650           \
-  --key-strength 2048       \
   --hostname "${FQDN}"      \
   --email "root@${FQDN}"
 
