@@ -9,10 +9,10 @@
 %global app                     apache
 %global user                    %{app}
 %global group                   %{app}
-%global release_prefix          105
+%global release_prefix          100
 
 Name:                           httpd
-Version:                        2.4.48
+Version:                        2.4.49
 Release:                        %{release_prefix}%{?dist}
 Summary:                        Apache HTTP Server
 License:                        ASL 2.0
@@ -859,6 +859,9 @@ exit ${rv}
 
 
 %changelog
+* Fri Sep 17 2021 Package Store <kitsune.solar@gmail.com> - 2.4.49-101
+- NEW: v2.4.49.
+
 * Sat Aug 14 2021 Package Store <kitsune.solar@gmail.com> - 2.4.48-105
 - UPD: SPEC-file.
 
