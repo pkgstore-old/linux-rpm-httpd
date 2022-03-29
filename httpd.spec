@@ -6,9 +6,7 @@
 %define vstring                 %(source /etc/os-release; echo ${NAME})
 %global mpm                     prefork
 
-%global app                     apache
-%global user                    %{app}
-%global group                   %{app}
+%global httpd_user              apache
 %global release_prefix          100
 
 Name:                           httpd
@@ -636,10 +634,10 @@ chmod 755 %{buildroot}%{_libdir}/httpd/build/vendor-apxs
 %{__rm} -rf %{buildroot}/etc/httpd/conf/{original,extra}
 
 %pre filesystem
-getent group %{group} >/dev/null || groupadd -g 48 -r %{group}
-getent passwd %{user} >/dev/null || \
-  useradd -r -u 48 -g %{group} -s /sbin/nologin \
-    -d %{contentdir} -c "Apache" %{user}
+getent group %{httpd_user} >/dev/null || groupadd -g 48 -r %{httpd_user}
+getent passwd %{httpd_user} >/dev/null || \
+  useradd -r -u 48 -g %{httpd_user} -s /sbin/nologin \
+    -d %{contentdir} -c "Apache" %{httpd_user}
 exit 0
 
 
@@ -770,12 +768,12 @@ exit ${rv}
 %{contentdir}/noindex/index.html
 %{contentdir}/server-status/*
 
-%attr(0710,root,%{group}) %dir /run/httpd
-%attr(0700,%{user},%{group}) %dir /run/httpd/htcacheclean
+%attr(0710,root,%{httpd_user}) %dir /run/httpd
+%attr(0700,%{httpd_user},%{httpd_user}) %dir /run/httpd/htcacheclean
 %attr(0700,root,root) %dir %{_localstatedir}/log/httpd
-%attr(0700,%{user},%{group}) %dir %{_localstatedir}/lib/httpd
-%attr(0700,%{user},%{group}) %dir %{_localstatedir}/cache/httpd
-%attr(0700,%{user},%{group}) %dir %{_localstatedir}/cache/httpd/proxy
+%attr(0700,%{httpd_user},%{httpd_user}) %dir %{_localstatedir}/lib/httpd
+%attr(0700,%{httpd_user},%{httpd_user}) %dir %{_localstatedir}/cache/httpd
+%attr(0700,%{httpd_user},%{httpd_user}) %dir %{_localstatedir}/cache/httpd/proxy
 
 %{_mandir}/man8/*
 %{_mandir}/man5/*
