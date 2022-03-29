@@ -901,43 +901,20 @@ exit ${rv}
 * Wed Sep 22 2021 Luboš Uhliarik <luhliari@redhat.com> - 2.4.49-3
 - Rebuilt for CI testing
 
-* Fri Sep 17 2021 Package Store <kitsune.solar@gmail.com> - 2.4.49-101
-- NEW: v2.4.49.
-
 * Thu Sep 16 2021 Luboš Uhliarik <luhliari@redhat.com> - 2.4.49-1
 - new version 2.4.49 (#2004776)
 
 * Tue Sep 14 2021 Sahana Prasad <sahana@redhat.com> - 2.4.48-8
 - Rebuilt with OpenSSL 3.0.0
 
-* Sat Aug 14 2021 Package Store <kitsune.solar@gmail.com> - 2.4.48-105
-- UPD: SPEC-file.
-
 * Fri Aug 06 2021 Luboš Uhliarik <luhliari@redhat.com> - 2.4.48-7
 - add symlink to system logo for noindex test page
 
-* Fri Aug 06 2021 Joe Orton <jorton@redhat.com> - 2.4.48-4
+* Fri Aug  6 2021 Joe Orton <jorton@redhat.com> - 2.4.48-4
 - add OpenSSL 3.x compatibility patch
 
 * Thu Jul 22 2021 Fedora Release Engineering <releng@fedoraproject.org> - 2.4.48-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
-
-* Tue Jul 20 2021 Package Store <kitsune.solar@gmail.com> - 2.4.48-104
-- UPD: mod_cgi/mod_cgid: update to unification from trunk.
-- UPD: httpd.conf: add note on care with Listen and starting at boot.
-
-* Sat Jun 19 2021 Package Store <kitsune.solar@gmail.com> - 2.4.48-103
-- UPD: SPEC syntax.
-
-* Fri Jun 18 2021 Package Store <kitsune.solar@gmail.com> - 2.4.48-102
-- UPD: Add "Vendor" & "Packager" fields.
-
-* Fri Jun 18 2021 Package Store <kitsune.solar@gmail.com> - 2.4.48-101
-- UPD: New build for latest changes.
-
-* Thu Jun 17 2021 Package Store <kitsune.solar@gmail.com> - 2.4.48-100
-- UPD: To Package Store.
-- UPD: License.
 
 * Fri Jul 16 2021 Joe Orton <jorton@redhat.com> - 2.4.48-2
 - mod_cgi/mod_cgid: update to unification from trunk
@@ -1035,30 +1012,36 @@ exit ${rv}
 * Mon Nov 11 2019 Lubos Uhliarik <luhliari@redhat.com> - 2.4.41-7
 - add automatic source tarball signature verification in %prep section
 
-* Sun Oct 13 2019 Package Store <kitsune.solar@gmail.com> - 2.4.41-102
-- FIX: mod_cgid/mod_cgi - further upstream consolidation patches.
-- FIX: mod_proxy_balancer - fix balancer-manager XSRF check (PR 63688).
+* Fri Oct  4 2019 Joe Orton <jorton@redhat.com> - 2.4.41-6
+- mod_cgid/mod_cgi: further upstream consolidation patches
 
-* Thu Oct 03 2019 Package Store <kitsune.solar@gmail.com> - 2.4.41-101
-- UPD: master-5b6bed.
-- FIX: mod_cgid - possible stdout timeout handling fix (#1757683).
+* Thu Oct  3 2019 Joe Orton <jorton@redhat.com> - 2.4.41-5
+- mod_proxy_balancer: fix balancer-manager XSRF check (PR 63688)
 
-* Wed Oct 02 2019 Package Store <kitsune.solar@gmail.com> - 2.4.41-100
-- NEW: v2.4.41.
-- UPD: master-a4638c.
-- UPD: "index.html".
+* Wed Oct  2 2019 Joe Orton <jorton@redhat.com> - 2.4.41-4
+- mod_cgid: possible stdout timeout handling fix (#1757683)
 
-* Wed Jul 24 2019 Package Store <kitsune.solar@gmail.com> - 2.4.39-105
-- UPD: master-5586df.
+* Wed Sep 25 2019 Joe Orton <jorton@redhat.com> - 2.4.41-3
+- mod_ssl: restore dependency on /usr/bin/hostname (#1135118)
 
-* Wed Jul 24 2019 Package Store <kitsune.solar@gmail.com> - 2.4.39-104
-- UPD: SPEC-file.
+* Thu Sep 19 2019 Stephen Gallagher <sgallagh@redhat.com> - 2.4.41-2
+- Use testpage from system-logos-httpd for proper branding
 
-* Sun Jul 07 2019 Package Store <kitsune.solar@gmail.com> - 2.4.39-103
-- UPD: "index.html".
+* Thu Aug 15 2019 Joe Orton <jorton@redhat.com> - 2.4.41-1
+- update to 2.4.41
 
-* Sat Jun 29 2019 Package Store <kitsune.solar@gmail.com> - 2.4.39-102
-- UPD: MARKETPLACE.
+* Thu Jul 25 2019 Fedora Release Engineering <releng@fedoraproject.org> - 2.4.39-13
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
+
+* Tue Jul 23 2019 Joe Orton <jorton@redhat.com> - 2.4.39-12
+- drop /var/lib/dav directory, since mod_dav_fs uses statedir
+
+* Wed Jul 17 2019 Joe Orton <jorton@redhat.com> - 2.4.39-11
+- mod_cgid: use fd passing to fix script stderr handling (#1591157)
+
+* Mon Jul  8 2019 Joe Orton <jorton@redhat.com> - 2.4.39-10
+- htpasswd: add SHA-256/512 support
+- apachectl: restore -V/-v/-t support (#1727434)
 
 * Fri Jun 21 2019 Joe Orton <jorton@redhat.com> - 2.4.39-9
 - create instance-specific StateDir in httpd@.service, instance.conf
@@ -1079,26 +1062,12 @@ exit ${rv}
 * Thu May 02 2019 Lubos Uhliarik <luhliari@redhat.com> - 2.4.39-4
 - httpd dependency on initscripts is unspecified (#1705188)
 
-* Fri Apr 19 2019 Kitsune Solar <kitsune.solar@gmail.com> - 2.4.39-101
-- UPD: "index.html".
+* Tue Apr  9 2019 Joe Orton <jorton@redhat.com> - 2.4.39-3
+- fix statedir symlink to point to /var/lib/httpd (#1697662)
+- mod_reqtimeout: fix default values regression (PR 63325)
 
-* Thu Apr 04 2019 Kitsune Solar <kitsune.solar@gmail.com> - 2.4.39-100
-- NEW: 2.4.39.
-
-* Sun Mar 24 2019 Kitsune Solar <kitsune.solar@gmail.com> - 2.4.38-16
-- UPD: Default MPM.
-
-* Sun Mar 24 2019 Kitsune Solar <kitsune.solar@gmail.com> - 2.4.38-15
-- FIX: "state" symlink.
-
-* Sun Mar 24 2019 Kitsune Solar <kitsune.solar@gmail.com> - 2.4.38-14
-- UPD: SPEC-file.
-
-* Sun Mar 24 2019 Kitsune Solar <kitsune.solar@gmail.com> - 2.4.38-13
-- UPD: SSL generator.
-
-* Sun Mar 17 2019 Kitsune Solar <kitsune.solar@gmail.com> - 2.4.38-12
-- UPD: SSL generator.
+* Tue Apr 02 2019 Lubos Uhliarik <luhliari@redhat.com> - 2.4.39-2
+- update to 2.4.39
 
 * Thu Feb 28 2019 Joe Orton <jorton@redhat.com> - 2.4.38-6
 - apachectl: cleanup and replace script wholesale (#1641237)
@@ -1106,24 +1075,6 @@ exit ${rv}
     * run systemctl with --no-pager option
     * implement graceful&graceful-stop by signal directly
 - run "httpd -t" from legacy action script
-
-* Thu Feb 14 2019 Kitsune Solar <kitsune.solar@gmail.com> - 2.4.38-11
-- UPD: SSL generator.
-
-* Mon Feb 11 2019 Kitsune Solar <kitsune.solar@gmail.com> - 2.4.38-10
-- UPD: SSL generator.
-
-* Sun Feb 10 2019 Kitsune Solar <kitsune.solar@gmail.com> - 2.4.38-9
-- UPD: SSL generator.
-
-* Sun Feb 10 2019 Kitsune Solar <kitsune.solar@gmail.com> - 2.4.38-8
-- UPD: SSL generator.
-
-* Sun Feb 10 2019 Kitsune Solar <kitsune.solar@gmail.com> - 2.4.38-7
-- UPD: SSL generator.
-
-* Sat Feb 09 2019 Kitsune Solar <kitsune.solar@gmail.com> - 2.4.38-6
-- UPD: Configurations from METADATA.
 
 * Tue Feb 05 2019 Lubos Uhliarik <luhliari@redhat.com> - 2.4.38-5
 - segmentation fault fix (FIPS)
@@ -1137,34 +1088,8 @@ exit ${rv}
 * Wed Jan 23 2019 Lubos Uhliarik <luhliari@redhat.com> - 2.4.38-2
 - new version 2.4.38 (#1668125)
 
-* Fri Jan 04 2019 Kitsune Solar <kitsune.solar@gmail.com> - 2.4.37-14
-- UPD: SSL generator.
-
-* Wed Jan 02 2019 Kitsune Solar <kitsune.solar@gmail.com> - 2.4.37-13
-- UPD: Configurations from METADATA.
-
-* Wed Jan 02 2019 Kitsune Solar <kitsune.solar@gmail.com> - 2.4.37-12
-- FIX: loading modules.
-- UPD: "index.html".
-
-* Mon Dec 31 2018 Kitsune Solar <kitsune.solar@gmail.com> - 2.4.37-11
-- UPD: Configurations from METADATA.
-
-* Mon Dec 31 2018 Kitsune Solar <kitsune.solar@gmail.com> - 2.4.37-10
-- UPD: SSL listen port.
-
-* Mon Dec 31 2018 Kitsune Solar <kitsune.solar@gmail.com> - 2.4.37-9
-- UPD: Default ports 80, 443 to 8080, 8081.
-
-* Fri Dec 21 2018 Kitsune Solar <kitsune.solar@gmail.com> - 2.4.37-8
-- FIX: typos.
-
-* Mon Dec 17 2018 Kitsune Solar <kitsune.solar@gmail.com> - 2.4.37-7
-- FIX: SSL.
-- UPD: "index.html".
-
-* Sat Dec 15 2018 Kitsune Solar <kitsune.solar@gmail.com> - 2.4.37-6
-- UPD: From MARKETPLACE.
+* Mon Jan 14 2019 Björn Esser <besser82@fedoraproject.org> - 2.4.37-6
+- Rebuilt for libcrypt.so.2 (#1666033)
 
 * Thu Nov 22 2018 Luboš Uhliarik <luhliari@redhat.com> - 2.4.37-5
 - Resolves: #1652678 - TLS connection allowed while all protocols are forbidden
