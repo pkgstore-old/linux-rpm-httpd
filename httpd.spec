@@ -7,7 +7,7 @@
 %global mpm                     prefork
 
 %global httpd_user              apache
-%global release_prefix          100
+%global release_prefix          101
 
 Name:                           httpd
 Version:                        2.4.53
@@ -860,6 +860,9 @@ exit ${rv}
 
 
 %changelog
+* Tue Mar 29 2022 Package Store <pkgstore@mail.ru> - 2.4.53-101
+- UPD: SPEC-file.
+
 * Tue Mar 29 2022 Package Store <pkgstore@mail.ru> - 2.4.53-100
 - UPD: Rebuild by Package Store.
 
