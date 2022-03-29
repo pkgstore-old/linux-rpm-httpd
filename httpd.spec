@@ -901,14 +901,14 @@ exit ${rv}
 * Wed Sep 22 2021 Luboš Uhliarik <luhliari@redhat.com> - 2.4.49-3
 - Rebuilt for CI testing
 
+* Fri Sep 17 2021 Package Store <kitsune.solar@gmail.com> - 2.4.49-101
+- NEW: v2.4.49.
+
 * Thu Sep 16 2021 Luboš Uhliarik <luhliari@redhat.com> - 2.4.49-1
 - new version 2.4.49 (#2004776)
 
 * Tue Sep 14 2021 Sahana Prasad <sahana@redhat.com> - 2.4.48-8
 - Rebuilt with OpenSSL 3.0.0
-
-* Fri Sep 17 2021 Package Store <kitsune.solar@gmail.com> - 2.4.49-101
-- NEW: v2.4.49.
 
 * Sat Aug 14 2021 Package Store <kitsune.solar@gmail.com> - 2.4.48-105
 - UPD: SPEC-file.
