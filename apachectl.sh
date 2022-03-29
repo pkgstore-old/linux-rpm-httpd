@@ -15,7 +15,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if [[ "${1}" = "-k" ]]; then
+###
+### NOTE: This is a replacement version of the "apachectl" script with
+### some differences in behaviour to the version distributed with
+### Apache httpd.  Please read the apachectl(8) man page for more
+### information.
+###
+
+if [ "x$1" = "x-k" ]; then
   shift
 fi
 

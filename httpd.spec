@@ -3,7 +3,7 @@
 %define suexec_caller           apache
 %define mmn                     20120211
 %define mmnisa                  %{mmn}%{__isa_name}%{__isa_bits}
-%define vstring                 %(source /etc/os-release; echo ${REDHAT_SUPPORT_PRODUCT})
+%define vstring                 %(source /etc/os-release; echo ${NAME})
 %global mpm                     prefork
 
 %global app                     apache
@@ -12,7 +12,7 @@
 %global release_prefix          100
 
 Name:                           httpd
-Version:                        2.4.49
+Version:                        2.4.53
 Release:                        %{release_prefix}%{?dist}
 Summary:                        Apache HTTP Server
 License:                        ASL 2.0
@@ -75,16 +75,15 @@ Source920:                      10-listen8081.conf
 Patch2:                         httpd-2.4.43-apxs.patch
 Patch3:                         httpd-2.4.43-deplibs.patch
 # Needed for socket activation and mod_systemd patch.
-Patch19:                        httpd-2.4.43-detect-systemd.patch
+Patch19:                        httpd-2.4.53-detect-systemd.patch
 # Features/functional changes.
 Patch21:                        httpd-2.4.48-r1842929+.patch
 Patch22:                        httpd-2.4.43-mod_systemd.patch
-Patch23:                        httpd-2.4.48-export.patch
+Patch23:                        httpd-2.4.53-export.patch
 Patch24:                        httpd-2.4.43-corelimit.patch
 Patch25:                        httpd-2.4.43-selinux.patch
 Patch26:                        httpd-2.4.43-gettid.patch
 Patch27:                        httpd-2.4.43-icons.patch
-Patch28:                        httpd-2.4.48-openssl3.patch
 Patch30:                        httpd-2.4.43-cachehardmax.patch
 Patch34:                        httpd-2.4.43-socket-activation.patch
 Patch38:                        httpd-2.4.43-sslciphdefault.patch
@@ -100,6 +99,7 @@ Patch45:                        httpd-2.4.43-logjournal.patch
 Patch60:                        httpd-2.4.43-enable-sslv3.patch
 Patch61:                        httpd-2.4.48-r1878890.patch
 Patch63:                        httpd-2.4.46-htcacheclean-dont-break.patch
+Patch65:                        httpd-2.4.51-r1894152.patch
 
 # Security fixes.
 
@@ -133,7 +133,7 @@ web server.
 
 %package devel
 Summary:                        Development interfaces for the Apache HTTP Server
-Requires:                       apr-devel, apr-util-devel, pkgconfig
+Requires: apr-devel, apr-util-devel, pkgconfig, libtool
 Requires:                       httpd = %{version}-%{release}
 
 %description devel
@@ -273,7 +273,6 @@ written in the Lua programming language.
 %patch25 -p1 -b .selinux
 %patch26 -p1 -b .gettid
 %patch27 -p1 -b .icons
-%patch28 -p1 -b .openssl3
 %patch30 -p1 -b .cachehardmax
 %patch34 -p1 -b .socketactivation
 %patch38 -p1 -b .sslciphdefault
@@ -286,6 +285,7 @@ written in the Lua programming language.
 %patch60 -p1 -b .enable-sslv3
 %patch61 -p1 -b .r1878890
 %patch63 -p1 -b .htcacheclean-dont-break
+%patch65 -p1 -b .r1894152
 
 # Patch in the vendor string.
 %{__sed} -i '/^#define PLATFORM/s/Unix/%{vstring}/' os/unix/os.h
@@ -605,30 +605,33 @@ done
 # have dependencies on redhat-rpm-config. Apxs uses the
 # "config_vars.mk" with a sanitized "config_vars.mk".
 %{__cp} -p %{buildroot}%{_libdir}/httpd/build/config_vars.mk \
-      %{buildroot}%{_libdir}/httpd/build/vendor_config_vars.mk
+  %{buildroot}%{_libdir}/httpd/build/vendor_config_vars.mk
 
-# Sanitize CFLAGS in standard "config_vars.mk".
-%{__sed} '/^CFLAGS/s,=.*$,= -O2 -g -Wall,' \
-    -i %{buildroot}%{_libdir}/httpd/build/config_vars.mk
+# Sanitize CFLAGS & LIBTOOL in standard config_vars.mk
+%{__sed} -e '/^CFLAGS/s,=.*$,= -O2 -g -Wall,' \
+  -e '/^LIBTOOL/s,/.*/libtool,%{_bindir}/libtool,' \
+  -i %{buildroot}%{_libdir}/httpd/build/config_vars.mk
+diff -u %{buildroot}%{_libdir}/httpd/build/vendor_config_vars.mk \
+  %{buildroot}%{_libdir}/httpd/build/config_vars.mk || true
 
 %{__sed} 's/config_vars.mk/vendor_config_vars.mk/' \
-    %{buildroot}%{_bindir}/apxs \
-    > %{buildroot}%{_libdir}/httpd/build/vendor-apxs
+  %{buildroot}%{_bindir}/apxs \
+  > %{buildroot}%{_libdir}/httpd/build/vendor-apxs
 touch -r %{buildroot}%{_bindir}/apxs \
-      %{buildroot}%{_libdir}/httpd/build/vendor-apxs
+  %{buildroot}%{_libdir}/httpd/build/vendor-apxs
 chmod 755 %{buildroot}%{_libdir}/httpd/build/vendor-apxs
 
 # Remove unpackaged files.
 %{__rm} -vf \
-      %{buildroot}%{_libdir}/*.exp \
-      %{buildroot}/etc/httpd/conf/mime.types \
-      %{buildroot}%{_libdir}/httpd/modules/*.exp \
-      %{buildroot}%{_libdir}/httpd/build/config.nice \
-      %{buildroot}%{_bindir}/{ap?-config,dbmmanage} \
-      %{buildroot}%{_sbindir}/{checkgid,envvars*} \
-      %{buildroot}%{contentdir}/htdocs/* \
-      %{buildroot}%{_mandir}/man1/dbmmanage.* \
-      %{buildroot}%{contentdir}/cgi-bin/*
+  %{buildroot}%{_libdir}/*.exp \
+  %{buildroot}/etc/httpd/conf/mime.types \
+  %{buildroot}%{_libdir}/httpd/modules/*.exp \
+  %{buildroot}%{_libdir}/httpd/build/config.nice \
+  %{buildroot}%{_bindir}/{ap?-config,dbmmanage} \
+  %{buildroot}%{_sbindir}/{checkgid,envvars*} \
+  %{buildroot}%{contentdir}/htdocs/* \
+  %{buildroot}%{_mandir}/man1/dbmmanage.* \
+  %{buildroot}%{contentdir}/cgi-bin/*
 
 %{__rm} -rf %{buildroot}/etc/httpd/conf/{original,extra}
 
@@ -859,6 +862,51 @@ exit ${rv}
 
 
 %changelog
+* Tue Mar 29 2022 Package Store <pkgstore@mail.ru> - 2.4.53-100
+- UPD: Rebuild by Package Store.
+
+* Thu Mar 17 2022 Luboš Uhliarik <luhliari@redhat.com> - 2.4.53-1
+- new version 2.4.53
+- fixes CVE-2022-23943, CVE-2022-22721, CVE-2022-22720 and CVE-2022-22719
+
+* Tue Feb  1 2022 Joe Orton <jorton@redhat.com> - 2.4.52-5
+- rebuild for new OpenLDAP (#2032699)
+
+* Mon Jan 31 2022 Joe Orton <jorton@redhat.com> - 2.4.52-4
+- add libtool to Requires: for httpd-devel (#2048281)
+
+* Fri Jan 28 2022 Joe Orton <jorton@redhat.com> - 2.4.52-3
+- use LIBTOOL=/usr/bin/libtool in the non-vendor config_vars.mk
+
+* Thu Jan 20 2022 Fedora Release Engineering <releng@fedoraproject.org> - 2.4.52-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
+
+* Wed Dec 22 2021 Joe Orton <jorton@redhat.com> - 2.4.52-1
+- update to 2.4.52
+
+* Mon Dec 06 2021 Neal Gompa <ngompa@fedoraproject.org> - 2.4.51-3
+- Use NAME from os-release(5) for vendor string
+  Related: #2029071 - httpd on CentOS identifies as RHEL
+
+* Tue Oct 12 2021 Joe Orton <jorton@redhat.com> - 2.4.51-2
+- mod_ssl: updated patch for OpenSSL 3.0 compatibility (#2007178)
+- mod_deflate/core: add two brigade handling correctness fixes
+
+* Thu Oct 07 2021 Patrick Uiterwijk <patrick@puiterwijk.org> - 2.4.51-1
+- new version 2.4.51
+
+* Tue Oct 05 2021 Luboš Uhliarik <luhliari@redhat.com> - 2.4.50-1
+- new version 2.4.50
+
+* Wed Sep 22 2021 Luboš Uhliarik <luhliari@redhat.com> - 2.4.49-3
+- Rebuilt for CI testing
+
+* Thu Sep 16 2021 Luboš Uhliarik <luhliari@redhat.com> - 2.4.49-1
+- new version 2.4.49 (#2004776)
+
+* Tue Sep 14 2021 Sahana Prasad <sahana@redhat.com> - 2.4.48-8
+- Rebuilt with OpenSSL 3.0.0
+
 * Fri Sep 17 2021 Package Store <kitsune.solar@gmail.com> - 2.4.49-101
 - NEW: v2.4.49.
 
@@ -890,6 +938,10 @@ exit ${rv}
 * Thu Jun 17 2021 Package Store <kitsune.solar@gmail.com> - 2.4.48-100
 - UPD: To Package Store.
 - UPD: License.
+
+* Fri Jul 16 2021 Joe Orton <jorton@redhat.com> - 2.4.48-2
+- mod_cgi/mod_cgid: update to unification from trunk
+- httpd.conf: add note on care with Listen and starting at boot
 
 * Wed Jun 02 2021 Luboš Uhliarik <luhliari@redhat.com> - 2.4.48-1
 - new version 2.4.48
