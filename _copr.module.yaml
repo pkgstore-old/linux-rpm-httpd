@@ -3,7 +3,7 @@ version: 2
 data:
   name: "httpd"
   stream: "2.4"
-  version: 20220330
+  version: 20220331
   summary: "COPR repository: pkgstore/httpd"
   description: >
     The Apache HTTP Server is a powerful, efficient, and extensible web server.
