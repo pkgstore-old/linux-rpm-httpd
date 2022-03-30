@@ -1,0 +1,52 @@
+document: "modulemd"
+version: 2
+data:
+  name: "httpd"
+  stream: "2.4"
+  version: 20220330
+  summary: "COPR repository: pkgstore/httpd"
+  description: >
+    The Apache HTTP Server is a powerful, efficient, and extensible web server.
+  license:
+    module:
+    - "ASL 2.0"
+  profiles:
+    common:
+      rpms:
+      - httpd
+      - httpd-filesystem
+      - httpd-manual
+      - httpd-tools
+      - mod_ldap
+      - mod_lua
+      - mod_proxy_html
+      - mod_session
+      - mod_ssl
+    default:
+      rpms:
+      - httpd
+      - httpd-filesystem
+      - httpd-manual
+      - httpd-tools
+      - mod_ldap
+      - mod_lua
+      - mod_proxy_html
+      - mod_session
+      - mod_ssl
+  api:
+    rpms:
+    - httpd
+    - httpd-filesystem
+    - httpd-manual
+    - httpd-tools
+    - mod_ldap
+    - mod_lua
+    - mod_proxy_html
+    - mod_session
+    - mod_ssl
+  components:
+    rpms:
+      httpd:
+        rationale: "User selected the package as a part of the module"
+        repository: "https://copr-dist-git.fedorainfracloud.org/git/pkgstore/httpd/httpd.git"
+        ref: "master"
