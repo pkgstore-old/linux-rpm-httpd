@@ -91,7 +91,6 @@ Patch46:                        %{name}-2.4.53-separate-systemd-fns.patch
 
 # Bug fixes.
 # https://bugzilla.redhat.com/show_bug.cgi?id=1397243
-
 Patch60:                        %{name}-2.4.43-enable-sslv3.patch
 Patch61:                        %{name}-2.4.48-r1878890.patch
 Patch63:                        %{name}-2.4.46-htcacheclean-dont-break.patch
@@ -522,11 +521,11 @@ EOF
 
 # Handle contentdir.
 %{__mkdir} %{buildroot}%{contentdir}/noindex \
-      %{buildroot}%{contentdir}/server-status
+  %{buildroot}%{contentdir}/server-status
 %{__ln_s} ../../testpage/index.html \
-      %{buildroot}%{contentdir}/noindex/index.html
+  %{buildroot}%{contentdir}/noindex/index.html
 %{__install} -m 644 -p docs/server-status/* \
-        %{buildroot}%{contentdir}/server-status
+  %{buildroot}%{contentdir}/server-status
 %{__rm} -rf %{contentdir}/htdocs
 
 # Remove manual sources.
@@ -735,6 +734,7 @@ exit ${rv}
 %{_unitdir}/httpd@.service
 %{_unitdir}/htcacheclean.service
 %{_unitdir}/*.socket
+
 
 %files core
 %doc ABOUT_APACHE README CHANGES LICENSE VERSIONING NOTICE
