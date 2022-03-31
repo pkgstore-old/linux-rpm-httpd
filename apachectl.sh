@@ -22,7 +22,7 @@
 ### information.
 ###
 
-if [ "x$1" = "x-k" ]; then
+if [[ "x$1" = "x-k" ]]; then
   shift
 fi
 
@@ -40,33 +40,33 @@ if [[ "x${2}" != "x" ]]; then
 fi
 
 case ${ACMD} in
-start|stop|restart|status)
-  /usr/bin/systemctl --no-pager "${ACMD}" ${SVC}
-  ERROR=${?}
+  start|stop|restart|status)
+    /usr/bin/systemctl --no-pager "${ACMD}" ${SVC}
+    ERROR=${?}
   ;;
-graceful)
-  if /usr/bin/systemctl -q is-active ${SVC}; then
-    /usr/bin/systemctl kill --signal=SIGUSR1 --kill-who=main ${SVC}
-  else
-    /usr/bin/systemctl start ${SVC}
-  fi
-  ERROR=${?}
+  graceful)
+    if /usr/bin/systemctl -q is-active ${SVC}; then
+      /usr/bin/systemctl kill --signal=SIGUSR1 --kill-who=main ${SVC}
+    else
+      /usr/bin/systemctl start ${SVC}
+    fi
+    ERROR=${?}
   ;;
-graceful-stop)
-  /usr/bin/systemctl kill --signal=SIGWINCH --kill-who=main ${SVC}
-  ERROR=${?}
+  graceful-stop)
+    /usr/bin/systemctl kill --signal=SIGWINCH --kill-who=main ${SVC}
+    ERROR=${?}
   ;;
-configtest|-t)
-  ${HTTPD} -t
-  ERROR=${?}
+  configtest|-t)
+    ${HTTPD} -t
+    ERROR=${?}
   ;;
--v|-V)
-  ${HTTPD} "${ACMD}"
-  ERROR=${?}
-  ;;
-*)
-  echo "apachectl: The ${ACMD} option is not supported." 1>&2
-  ERROR=2
+  -v|-V)
+    ${HTTPD} "${ACMD}"
+    ERROR=${?}
+    ;;
+  *)
+    echo "apachectl: The ${ACMD} option is not supported." 1>&2
+    ERROR=2
   ;;
 esac
 

@@ -7,7 +7,7 @@
 %global mpm                     prefork
 
 %global httpd_user              apache
-%global release_prefix          101
+%global release_prefix          1000
 
 Name:                           httpd
 Version:                        2.4.53
@@ -15,14 +15,12 @@ Release:                        %{release_prefix}%{?dist}
 Summary:                        Apache HTTP Server
 License:                        ASL 2.0
 URL:                            https://httpd.apache.org
-Vendor:                         Package Store <https://pkgstore.github.io>
-Packager:                       Kitsune Solar <kitsune.solar@gmail.com>
 
-Source0:                        https://www.apache.org/dist/httpd/httpd-%{version}.tar.bz2
-Source1:                        https://www.apache.org/dist/httpd/httpd-%{version}.tar.bz2.asc
+Source0:                        %{name}-%{version}.tar.xz
+# Source1:                      https://www.apache.org/dist/httpd/httpd-%{version}.tar.bz2.asc
 # GPG key file downloaded and verified by luhliarik.
 # https://httpd.apache.org/dev/verification.html
-Source2:                        https://dist.apache.org/repos/dist/release/httpd/KEYS
+# Source2:                      https://dist.apache.org/repos/dist/release/httpd/KEYS
 Source3:                        httpd.logrotate
 Source4:                        instance.conf
 Source5:                        httpd-ssl-pass-dialog
@@ -55,6 +53,7 @@ Source31:                       README.confmod
 Source32:                       httpd.service.xml
 Source33:                       htcacheclean.service.xml
 Source34:                       httpd.conf.xml
+Source35:                       00-brotli.conf
 Source40:                       htcacheclean.service
 Source41:                       htcacheclean.sysconf
 Source42:                       httpd-init.service
@@ -64,40 +63,39 @@ Source45:                       config.layout
 Source46:                       apachectl.sh
 Source47:                       apachectl.xml
 Source48:                       apache-poweredby.png
-# Signature.
-Source900:                      https://www.apache.org/dist/httpd/httpd-%{version}.tar.bz2.asc
 # Listen port.
 Source920:                      10-listen8081.conf
 
 # Build / scripts patches.
-Patch2:                         httpd-2.4.43-apxs.patch
-Patch3:                         httpd-2.4.43-deplibs.patch
+Patch2:                         %{name}-2.4.43-apxs.patch
+Patch3:                         %{name}-2.4.43-deplibs.patch
 # Needed for socket activation and mod_systemd patch.
-Patch19:                        httpd-2.4.53-detect-systemd.patch
+Patch19:                        %{name}-2.4.53-detect-systemd.patch
 # Features/functional changes.
-Patch21:                        httpd-2.4.48-r1842929+.patch
-Patch22:                        httpd-2.4.43-mod_systemd.patch
-Patch23:                        httpd-2.4.53-export.patch
-Patch24:                        httpd-2.4.43-corelimit.patch
-Patch25:                        httpd-2.4.43-selinux.patch
-Patch26:                        httpd-2.4.43-gettid.patch
-Patch27:                        httpd-2.4.43-icons.patch
-Patch30:                        httpd-2.4.43-cachehardmax.patch
-Patch34:                        httpd-2.4.43-socket-activation.patch
-Patch38:                        httpd-2.4.43-sslciphdefault.patch
-Patch39:                        httpd-2.4.43-sslprotdefault.patch
-Patch40:                        httpd-2.4.43-r1861269.patch
-Patch41:                        httpd-2.4.43-r1861793+.patch
-Patch42:                        httpd-2.4.48-r1828172+.patch
-Patch45:                        httpd-2.4.43-logjournal.patch
+Patch21:                        %{name}-2.4.48-r1842929+.patch
+Patch22:                        %{name}-2.4.43-mod_systemd.patch
+Patch23:                        %{name}-2.4.53-export.patch
+Patch24:                        %{name}-2.4.43-corelimit.patch
+Patch25:                        %{name}-2.4.43-selinux.patch
+Patch26:                        %{name}-2.4.43-gettid.patch
+Patch27:                        %{name}-2.4.43-icons.patch
+Patch30:                        %{name}-2.4.43-cachehardmax.patch
+Patch34:                        %{name}-2.4.43-socket-activation.patch
+Patch38:                        %{name}-2.4.43-sslciphdefault.patch
+Patch39:                        %{name}-2.4.43-sslprotdefault.patch
+Patch40:                        %{name}-2.4.43-r1861269.patch
+Patch41:                        %{name}-2.4.43-r1861793+.patch
+Patch42:                        %{name}-2.4.48-r1828172+.patch
+Patch45:                        %{name}-2.4.43-logjournal.patch
+Patch46:                        %{name}-2.4.53-separate-systemd-fns.patch
 
 # Bug fixes.
 # https://bugzilla.redhat.com/show_bug.cgi?id=1397243
 
-Patch60:                        httpd-2.4.43-enable-sslv3.patch
-Patch61:                        httpd-2.4.48-r1878890.patch
-Patch63:                        httpd-2.4.46-htcacheclean-dont-break.patch
-Patch65:                        httpd-2.4.51-r1894152.patch
+Patch60:                        %{name}-2.4.43-enable-sslv3.patch
+Patch61:                        %{name}-2.4.48-r1878890.patch
+Patch63:                        %{name}-2.4.46-htcacheclean-dont-break.patch
+Patch65:                        %{name}-2.4.51-r1894152.patch
 
 # Security fixes.
 
@@ -106,24 +104,36 @@ BuildRequires:                  perl-interpreter, perl-generators, systemd-devel
 BuildRequires:                  zlib-devel, libselinux-devel, lua-devel, brotli-devel
 BuildRequires:                  apr-devel >= 1.5.0, apr-util-devel >= 1.5.0, pcre-devel >= 5.0
 BuildRequires:                  gnupg2
-Requires:                       /etc/mime.types, system-logos(httpd-logo-ng)
+Requires:                       system-logos(httpd-logo-ng)
 Provides:                       webserver
-Provides:                       mod_dav = %{version}-%{release}, httpd-suexec = %{version}-%{release}
-Provides:                       httpd-mmn = %{mmn}, httpd-mmn = %{mmnisa}
-Requires:                       httpd-tools = %{version}-%{release}
-Requires:                       httpd-filesystem = %{version}-%{release}
+Requires:                       %{name}-core = 0:%{version}-%{release}
 Recommends:                     mod_http2, mod_lua
-Requires(pre):                  httpd-filesystem
 Requires(preun):                systemd-units
 Requires(postun):               systemd-units
 Requires(post):                 systemd-units
-Conflicts:                      apr < 1.5.0-1
-Provides:                       mod_proxy_uwsgi = %{version}-%{release}
-Obsoletes:                      mod_proxy_uwsgi < 2.0.17.1-2
 
 %description
 The Apache HTTP Server is a powerful, efficient, and extensible
 web server.
+
+# -------------------------------------------------------------------------------------------------------------------- #
+# Package: core
+# -------------------------------------------------------------------------------------------------------------------- #
+
+%package core
+Summary:                        %{name} minimal core
+Provides:                       mod_dav = %{version}-%{release}, %{name}-suexec = %{version}-%{release}
+Provides:                       %{name}-mmn = %{mmn}, %{name}-mmn = %{mmnisa}
+Provides:                       mod_proxy_uwsgi = %{version}-%{release}
+Requires:                       /etc/mime.types
+Requires:                       %{name}-tools = %{version}-%{release}
+Requires:                       %{name}-filesystem = %{version}-%{release}
+Requires(pre):                  %{name}-filesystem
+Conflicts:                      apr < 1.5.0-1
+Obsoletes:                      mod_proxy_uwsgi < 2.0.17.1-2
+
+%description core
+The %{name}-core package contains essential %{name} binaries.
 
 # -------------------------------------------------------------------------------------------------------------------- #
 # Package: devel
@@ -131,11 +141,11 @@ web server.
 
 %package devel
 Summary:                        Development interfaces for the Apache HTTP Server
-Requires: apr-devel, apr-util-devel, pkgconfig, libtool
-Requires:                       httpd = %{version}-%{release}
+Requires:                       apr-devel, apr-util-devel, pkgconfig, libtool
+Requires:                       %{name} = %{version}-%{release}
 
 %description devel
-The httpd-devel package contains the APXS binary and other files
+The %{name}-devel package contains the APXS binary and other files
 that you need to build Dynamic Shared Objects (DSOs) for the
 Apache HTTP Server.
 
@@ -149,11 +159,11 @@ to install this package.
 
 %package manual
 Summary:                        Documentation for the Apache HTTP Server
-Requires:                       httpd = %{version}-%{release}
+Requires:                       %{name} = %{version}-%{release}
 BuildArch:                      noarch
 
 %description manual
-The httpd-manual package contains the complete manual and
+The %{name}-manual package contains the complete manual and
 reference guide for the Apache HTTP Server. The information can
 also be found at https://httpd.apache.org/docs/2.4/.
 
@@ -167,7 +177,7 @@ BuildArch:                      noarch
 Requires(pre):                  /usr/sbin/useradd
 
 %description filesystem
-The httpd-filesystem package contains the basic directory layout
+The %{name}-filesystem package contains the basic directory layout
 for the Apache HTTP Server including the correct permissions
 for the directories.
 
@@ -179,7 +189,7 @@ for the directories.
 Summary:                        Tools for use with the Apache HTTP Server
 
 %description tools
-The httpd-tools package contains tools which can be used with
+The %{name}-tools package contains tools which can be used with
 the Apache HTTP Server.
 
 # -------------------------------------------------------------------------------------------------------------------- #
@@ -190,8 +200,8 @@ the Apache HTTP Server.
 Summary:                        SSL/TLS module for the Apache HTTP Server
 Epoch:                          1
 BuildRequires:                  openssl-devel
-Requires(pre):                  httpd-filesystem
-Requires:                       httpd = 0:%{version}-%{release}, httpd-mmn = %{mmnisa}
+Requires(pre):                  %{name}-filesystem
+Requires:                       %{name} = 0:%{version}-%{release}, %{name}-mmn = %{mmnisa}
 Requires:                       sscg >= 2.2.0, /usr/bin/hostname
 # Require an OpenSSL which supports PROFILE=SYSTEM.
 Conflicts:                      openssl-libs < 1:1.0.1h-4
@@ -209,7 +219,7 @@ Security (TLS) protocols.
 
 %package -n mod_proxy_html
 Summary:                        HTML and XML content filters for the Apache HTTP Server
-Requires:                       httpd = 0:%{version}-%{release}, httpd-mmn = %{mmnisa}
+Requires:                       %{name} = 0:%{version}-%{release}, %{name}-mmn = %{mmnisa}
 BuildRequires:                  libxml2-devel
 BuildRequires:                  make
 Epoch:                          1
@@ -225,7 +235,7 @@ transform and modify HTML and XML content.
 
 %package -n mod_ldap
 Summary:                        LDAP authentication modules for the Apache HTTP Server
-Requires:                       httpd = 0:%{version}-%{release}, httpd-mmn = %{mmnisa}
+Requires:                       %{name} = 0:%{version}-%{release}, %{name}-mmn = %{mmnisa}
 Requires:                       apr-util-ldap
 
 %description -n mod_ldap
@@ -238,15 +248,19 @@ authentication to the Apache HTTP Server.
 
 %package -n mod_session
 Summary:                        Session interface for the Apache HTTP Server
-Requires:                       httpd = 0:%{version}-%{release}, httpd-mmn = %{mmnisa}
+Requires:                       %{name} = 0:%{version}-%{release}, %{name}-mmn = %{mmnisa}
 
 %description -n mod_session
 The mod_session module and associated backends provide an abstract
 interface for storing and accessing per-user session data.
 
+# -------------------------------------------------------------------------------------------------------------------- #
+# Package: mod_lua
+# -------------------------------------------------------------------------------------------------------------------- #
+
 %package -n mod_lua
-Summary: Lua scripting support for the Apache HTTP Server
-Requires: httpd = 0:%{version}-%{release}, httpd-mmn = %{mmnisa}
+Summary:                        Lua scripting support for the Apache HTTP Server
+Requires:                       %{name} = 0:%{version}-%{release}, %{name}-mmn = %{mmnisa}
 
 %description -n mod_lua
 The mod_lua module allows the server to be extended with scripts
@@ -257,7 +271,6 @@ written in the Lua programming language.
 # -------------------------------------------------------------------------------------------------------------------- #
 
 %prep
-%{gpgverify} --keyring='%{SOURCE2}' --signature='%{SOURCE1}' --data='%{SOURCE0}'
 %setup -q
 %patch2 -p1 -b .apxs
 %patch3 -p1 -b .deplibs
@@ -279,6 +292,7 @@ written in the Lua programming language.
 %patch41 -p1 -b .r1861793+
 %patch42 -p1 -b .r1828172+
 %patch45 -p1 -b .logjournal
+%patch46 -p1 -b .separatesystemd
 
 %patch60 -p1 -b .enable-sslv3
 %patch61 -p1 -b .r1878890
@@ -417,7 +431,8 @@ done
   %{buildroot}%{_sysconfdir}/httpd/conf.modules.d/README
 for f in 00-base.conf 00-mpm.conf 00-lua.conf 01-cgi.conf 00-dav.conf \
   00-proxy.conf 00-ssl.conf 01-ldap.conf 00-proxyhtml.conf \
-  01-ldap.conf 00-systemd.conf 01-session.conf 00-optional.conf; do
+  01-ldap.conf 00-systemd.conf 01-session.conf 00-optional.conf \
+  00-brotli.conf; do
     %{__install} -m 644 -p %{_sourcedir}/${f} \
     %{buildroot}%{_sysconfdir}/httpd/conf.modules.d/${f}
 done
@@ -576,7 +591,7 @@ done
 # Install man pages.
 %{__install} -d %{buildroot}%{_mandir}/man8 %{buildroot}%{_mandir}/man5
 %{__install} -m 644 -p httpd.service.8 httpd-init.service.8 httpd.socket.8  \
-  httpd@.service.8 htcacheclean.service.8                                   \
+  httpd@.service.8 htcacheclean.service.8 apachectl.8 \
   %{buildroot}%{_mandir}/man8
 %{__install} -m 644 -p httpd.conf.5 \
   %{buildroot}%{_mandir}/man5
@@ -707,6 +722,21 @@ exit ${rv}
 
 
 %files
+%{_mandir}/man8/*
+%{_mandir}/man5/*
+%exclude %{_mandir}/man8/httpd-init.*
+
+%config(noreplace) %{_sysconfdir}/httpd/conf.modules.d/00-brotli.conf
+%config(noreplace) %{_sysconfdir}/httpd/conf.modules.d/00-systemd.conf
+%{_libdir}/httpd/modules/mod_brotli.so
+%{_libdir}/httpd/modules/mod_systemd.so
+
+%{_unitdir}/httpd.service
+%{_unitdir}/httpd@.service
+%{_unitdir}/htcacheclean.service
+%{_unitdir}/*.socket
+
+%files core
 %doc ABOUT_APACHE README CHANGES LICENSE VERSIONING NOTICE
 %doc docs/conf/extra/*.conf
 %doc instance.conf server-status.conf
@@ -716,6 +746,7 @@ exit ${rv}
 %{_sysconfdir}/httpd/state
 %{_sysconfdir}/httpd/run
 %dir %{_sysconfdir}/httpd/conf
+
 %config(noreplace) %{_sysconfdir}/httpd/conf/httpd.conf
 %config(noreplace) %{_sysconfdir}/httpd/conf/magic
 
@@ -727,7 +758,10 @@ exit ${rv}
 
 %dir %{_sysconfdir}/httpd/conf.modules.d
 %{_sysconfdir}/httpd/conf.modules.d/README
+
 %config(noreplace) %{_sysconfdir}/httpd/conf.modules.d/*.conf
+%exclude %{_sysconfdir}/httpd/conf.modules.d/00-brotli.conf
+%exclude %{_sysconfdir}/httpd/conf.modules.d/00-systemd.conf
 %exclude %{_sysconfdir}/httpd/conf.modules.d/00-ssl.conf
 %exclude %{_sysconfdir}/httpd/conf.modules.d/00-proxyhtml.conf
 %exclude %{_sysconfdir}/httpd/conf.modules.d/00-lua.conf
@@ -749,6 +783,8 @@ exit ${rv}
 %dir %{_libdir}/httpd
 %dir %{_libdir}/httpd/modules
 %{_libdir}/httpd/modules/mod*.so
+%exclude %{_libdir}/httpd/modules/mod_brotli.so
+%exclude %{_libdir}/httpd/modules/mod_systemd.so
 %exclude %{_libdir}/httpd/modules/mod_auth_form.so
 %exclude %{_libdir}/httpd/modules/mod_ssl.so
 %exclude %{_libdir}/httpd/modules/mod_*ldap.so
@@ -774,15 +810,6 @@ exit ${rv}
 %attr(0700,%{httpd_user},%{httpd_user}) %dir %{_localstatedir}/lib/httpd
 %attr(0700,%{httpd_user},%{httpd_user}) %dir %{_localstatedir}/cache/httpd
 %attr(0700,%{httpd_user},%{httpd_user}) %dir %{_localstatedir}/cache/httpd/proxy
-
-%{_mandir}/man8/*
-%{_mandir}/man5/*
-%exclude %{_mandir}/man8/httpd-init.*
-
-%{_unitdir}/httpd.service
-%{_unitdir}/httpd@.service
-%{_unitdir}/htcacheclean.service
-%{_unitdir}/*.socket
 
 
 %files filesystem
@@ -860,11 +887,14 @@ exit ${rv}
 
 
 %changelog
-* Tue Mar 29 2022 Package Store <pkgstore@mail.ru> - 2.4.53-101
-- UPD: SPEC-file.
-
-* Tue Mar 29 2022 Package Store <pkgstore@mail.ru> - 2.4.53-100
+* Thu Mar 31 2022 Package Store <pkgstore@mail.ru> - 2.4.53-1000
 - UPD: Rebuild by Package Store.
+- UPD: File "httpd.spec".
+
+* Wed Mar 30 2022 Luboš Uhliarik <luhliari@redhat.com> - 2.4.53-2
+- Resolves: #2070517 - Allow install httpd with smaller footprint
+- try to minimize httpd dependencies (new httpd-core package)
+- mod_systemd and mod_brotli are now in the main httpd package
 
 * Thu Mar 17 2022 Luboš Uhliarik <luhliari@redhat.com> - 2.4.53-1
 - new version 2.4.53
