@@ -14,6 +14,7 @@ data:
     common:
       rpms:
       - httpd
+      - httpd-core
       - httpd-filesystem
       - httpd-manual
       - httpd-tools
@@ -25,6 +26,7 @@ data:
     default:
       rpms:
       - httpd
+      - httpd-core
       - httpd-filesystem
       - httpd-manual
       - httpd-tools
@@ -36,6 +38,7 @@ data:
   api:
     rpms:
     - httpd
+    - httpd-core
     - httpd-filesystem
     - httpd-manual
     - httpd-tools
