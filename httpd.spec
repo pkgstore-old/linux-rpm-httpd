@@ -7,7 +7,7 @@
 %global mpm                     prefork
 
 %global httpd_user              apache
-%global release_prefix          1000
+%global release_prefix          1001
 
 Name:                           httpd
 Version:                        2.4.53
@@ -887,6 +887,11 @@ exit ${rv}
 
 
 %changelog
+* Sun Apr 03 2022 Package Store <pkgstore@mail.ru> - 2.4.53-1001
+- DEL: "mod_brotli.so" from "00-base.conf".
+- DEL: "ci.fmf".
+- DEL: "gating.yaml".
+
 * Thu Mar 31 2022 Package Store <pkgstore@mail.ru> - 2.4.53-1000
 - UPD: Rebuild by Package Store.
 - UPD: File "httpd.spec".
