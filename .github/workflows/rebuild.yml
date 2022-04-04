@@ -10,7 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     name: "Rebuild"
     steps:
+      - run: echo "PKG_NAME=$( echo '${{ github.repository }}' | awk -F 'linux-rpm-' '{print $2}' )" >> $GITHUB_ENV
+        shell: bash
       - uses: pkgstore/github-action-rpm-rebuild@main
         with:
           copr_token: "${{ secrets.COPR_TOKEN }}"
-          pkg_name: "${{ secrets.PKG_NAME }}"
+          pkg_name: "${{ env.PKG_NAME }}"
