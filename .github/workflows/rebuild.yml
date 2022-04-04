@@ -1,0 +1,16 @@
+name: "RPM Rebuild"
+
+on:
+  schedule:
+    - cron:  "0 0 1 * *"
+  workflow_dispatch:
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    name: "Rebuild"
+    steps:
+      - uses: pkgstore/github-action-rpm-rebuild@main
+        with:
+          copr_token: "${{ secrets.COPR_TOKEN }}"
+          pkg_name: "${{ secrets.PKG_NAME }}"
